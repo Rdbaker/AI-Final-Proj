@@ -24,7 +24,7 @@ def synonym_finder(wrd):
             # multiplier = (Thesaurus.get_multiplier/ thesaurus_total) *
             multiplier = (len(syn_list) - idx) / len(syn_list)
             for m_idx, item in enumerate(master_list):
-                if item['word'] == word:
+                if item['word'].lower() == word.lower():
                     master_list[m_idx]['value'] += multiplier
                     master_list[m_idx]['thes_idxs'] += [i]
                     flag = 1

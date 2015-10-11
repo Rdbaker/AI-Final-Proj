@@ -6,6 +6,7 @@
 """
 from requests import get
 from bs4 import BeautifulSoup
+from canons.utils import OrderedSet
 
 URI = 'http://www.stands4.com/services/v2/syno.php?uid=4412&tokenid=92XGfHe4TOMhvfEv&word={word}'
 
@@ -20,7 +21,7 @@ def canon(word):
             if lst:
                 syns.append(lst[0])
                 lst.remove(lst[0])
-    return filter(lambda word: len(word) > 0, syns)
+    return list(OrderedSet(filter(lambda word: len(word) > 0, syns)))
 
 
 if __name__ == "__main__":
