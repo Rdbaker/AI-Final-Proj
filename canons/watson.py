@@ -12,8 +12,7 @@ URI = 'http://watson.kmi.open.ac.uk/API/term/synonyms?term={word}'
 def canon(word):
     """Given a word, returns a list of synonyms in order of relevance"""
     r = get(URI.format(word=word), headers={'Accept': 'application/json'})
-    print r.json()
-    print dir(r)
+    return []
 
 
 if __name__ == "__main__":

@@ -20,7 +20,7 @@ def canon(word):
             if lst:
                 syns.append(lst[0])
                 lst.remove(lst[0])
-    return syns
+    return filter(lambda word: len(word) > 0, syns)
 
 
 if __name__ == "__main__":

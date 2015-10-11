@@ -4,54 +4,50 @@
 
 # Thesaurus is a wrapper class for a thesaurus
 # word_list returns a list of words that're a synonym for the given word
-# get_multiplier returns the multiplier of the thesaurus given how good it has been thus far
+# get_multiplier returns the multiplier of the thesaurus given how good
+# it has been thus far
 
 from __future__ import division
 
 from canons.thesaurus import THESAURI
-from canons.utils import thesaurus
+# from canons.utils import OrderedSet
+
 
 def synonym_finder(wrd):
+    """Find synonyms from a word"""
     master_list = []
-    for thes in THESAURI:
-        thes.read_logs("")
-  	thesaurus_total = thes.value
-        temp_list = thes.find_syns(wrd)
-	words_list.append(thesaurus.find_syns(wrd))
-        
-        for word in temp_list:
+    # thesaurus_total = sum([thes.value for thes in THESAURI])
+    for i, t in enumerate(THESAURI):
+        syn_list = t.find_syns(wrd)
+        for idx, word in enumerate(syn_list):
             flag = 0
-            #multiplier = (Thesaurus.get_multiplier/ thesaurus_total) * 
-            multiplier = (len(temp_list) - temp_list.index(word)) / len(temp_list)
-            for item  in master_list:
-                if item[0] == word:
-                    multiplier2 = master_list[master_list.index(item)][1]
-                    thes_list.master_list[master_list.index(item)][1]
-                    master_list[master_list.index(item)] = (word, (multiplier + multiplier2))
+            # multiplier = (Thesaurus.get_multiplier/ thesaurus_total) *
+            multiplier = (len(syn_list) - idx) / len(syn_list)
+            for m_idx, item in enumerate(master_list):
+                if item['word'] == word:
+                    master_list[m_idx]['value'] += multiplier
+                    master_list[m_idx]['thes_idxs'] += [i]
                     flag = 1
             if flag == 0:
-                master_list.append((word, multiplier))
-    
-    master_list.sort(key=lambda tup: tup[1])
-    print master_list
+                master_list.append({'word': word,
+                                    'value': multiplier,
+                                    'thes_idxs': [i]})
 
-    return_list = []
-    for word in master_list:
-        if (edit_distance(wrd, word) > 2):
-            return_list.append(word[0])
-        if len(return_list) == 5:
-            return return_list
-    return return_list
+    master_list.sort(key=lambda d: -d['value'])
+    print filter(lambda word: edit_distance(wrd, word['word']) > 2, master_list)[:5]
+    return filter(lambda word: edit_distance(wrd, word['word']) > 2, master_list)[:5]
+
 
 # Edit distance function taken from:
 # http://stackoverflow.com/questions/2460177/edit-distance-in-python
 def edit_distance(wrd1, wrd2):
-    len_1=len(wrd1)
-    len_2=len(wrd2)
+    len_1 = len(wrd1)
+    len_2 = len(wrd2)
 
-    x =[[0]*(len_2+1) for _ in range(len_1+1)]#the matrix whose last element ->edit distance
+    # the matrix whose last element ->edit distance
+    x = [[0]*(len_2+1) for _ in range(len_1+1)]
 
-    for i in range(0,len_1+1): #initialization of base case values
+    for i in range(0, len_1+1): #initialization of base case values
         x[i][0]=i
 
     for j in range(0,len_2+1):
@@ -67,4 +63,5 @@ def edit_distance(wrd1, wrd2):
     return x[i][j]
 
 if __name__ == '__main__':
-    synonym_finder("happy")
+    word = raw_input("What is a synonym of the word you're looking for? ")
+    synonym_finder(str(word))
