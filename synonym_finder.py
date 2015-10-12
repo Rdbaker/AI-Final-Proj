@@ -24,14 +24,14 @@ def synonym_finder(wrd):
             multiplier = (len(syn_list) - idx) / len(syn_list)
             for m_idx, item in enumerate(master_list):
                 if item['word'].lower() == word.lower():
-                    master_list[m_idx]['value'] += multiplier + t.value
+                    master_list[m_idx]['value'] += multiplier# + t.value TODO add this back in later
                     master_list[m_idx]['thes_meta'].append({
                             'thesaurus': t,
                             'thesaurus_word_value': multiplier})
                     flag = 1
             if flag == 0:
                 master_list.append({'word': word,
-                                    'value': multiplier + t.value,
+                                    'value': multiplier,# + t.value, TODO: add this back in later
                                     'thes_meta': [{
                                         'thesaurus': t,
                                         'thesaurus_word_value': multiplier}]})
