@@ -35,7 +35,6 @@ class Thesaurus(object):
         """
         with open(logfile, 'r') as file_contents:
             data = json.load(file_contents)
-            print data
             for log in data:
                 self.value += log.get('value', 0)
             self.iteration = len(data)
