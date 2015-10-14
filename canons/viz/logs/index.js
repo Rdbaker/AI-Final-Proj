@@ -120,8 +120,8 @@ $(document).ready(function() {
 
   function makeLineGraph() {
     // Set the dimensions of the canvas / graph
-    var margin = {top: 30, right: 20, bottom: 30, left: 50},
-        width = 600 - margin.left - margin.right,
+    var margin = {top: 30, right: 80, bottom: 30, left: 50},
+        width = 700 - margin.left - margin.right,
         height = 270 - margin.top - margin.bottom;
 
     // Set the ranges

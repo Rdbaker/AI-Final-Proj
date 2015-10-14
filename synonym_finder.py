@@ -15,23 +15,21 @@ from canons.thesaurus import THESAURI
 def synonym_finder(wrd):
     """Find synonyms from a word"""
     master_list = []
-    # thesaurus_total = sum([thes.value for thes in THESAURI])
     for i, t in enumerate(THESAURI):
         syn_list = t.find_syns(wrd)
         for idx, word in enumerate(syn_list):
             flag = 0
-            # multiplier = (Thesaurus.get_multiplier/ thesaurus_total) *
             multiplier = (len(syn_list) - idx) / len(syn_list)
             for m_idx, item in enumerate(master_list):
                 if item['word'].lower() == word.lower():
-                    master_list[m_idx]['value'] += multiplier# + t.value TODO add this back in later
+                    master_list[m_idx]['value'] += multiplier + t.value #TODO add this back in later
                     master_list[m_idx]['thes_meta'].append({
                             'thesaurus': t,
                             'thesaurus_word_value': multiplier})
                     flag = 1
             if flag == 0:
                 master_list.append({'word': word,
-                                    'value': multiplier,# + t.value, TODO: add this back in later
+                                    'value': multiplier + t.value, #TODO: add this back in later
                                     'thes_meta': [{
                                         'thesaurus': t,
                                         'thesaurus_word_value': multiplier}]})
@@ -87,6 +85,7 @@ if __name__ == '__main__':
     choice = raw_input("Which of these words is the closest to the word you " +
                        "were looking for (zero indexed)? (press enter if none) ")
     try:
+        exit(0) # TODO comment this out when recording user reponse
         if choice == '':
             log_zeros(word)
         else:
